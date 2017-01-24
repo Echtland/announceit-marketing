@@ -16,10 +16,10 @@ if (process.argv.indexOf('-p') === -1) {
 }
 
 module.exports = {
-  context: path.join(__dirname, '_scripts'),
+  context: path.join(__dirname, 'src', '_webpack'),
 
   entry: {
-    app: ["index.js", "style.scss"],
+    app: ["javascripts/index.js", "stylesheets/style.scss"],
   },
 
   output: {
@@ -29,7 +29,10 @@ module.exports = {
 
   resolve: {
     extensions: ['', '.js', '.scss'],
-    root: path.join(__dirname, '_scripts')
+    root: path.join(__dirname, 'src', '_webpack'),
+    alias: {
+      images: path.resolve(__dirname, 'src', 'assets', 'images'),
+    }
   },
 
   module: {
@@ -81,18 +84,5 @@ if (devBuild) {
   }
   config.devtool = 'eval-source-map';
 } else {
-  config.plugins.push(
-    function() {
-      this.plugin("compile", function() {
-        fs.readdir(assetsPath, function(err, files) {
-          if (files === undefined) return;
-
-          for (let i = 0; i < files.length; i++) {
-            fs.unlinkSync(path.join(assetsPath, files[i]));
-          }
-        });
-      });
-    }
-  );
   config.plugins.push(new webpack.optimize.DedupePlugin());
 }

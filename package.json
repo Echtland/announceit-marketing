@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "npm run webpack && npm run jekyll",
+    "start": "foreman start -f Procfile",
+    "deploy": "npm run build && ./bin/deploy",
     "build": "npm run build:webpack && npm run build:jekyll",
     "build:jekyll": "bundle exec jekyll build",
     "build:webpack": "NODE_ENV=production webpack -p",
     "serve:jekyll": "bundle exec jekyll serve --watch --config '_config.yml,_config_dev.yml'",
-    "serve:webpack": "./node_modules/.bin/webpack-dev-server --inline --progress"
+    "serve:webpack": "./node_modules/.bin/webpack-dev-server --inline --progress --colors"
   },
   "author": "",
   "license": "MIT",
@@ -22,7 +23,6 @@
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
-    "gh-pages-deploy": "^0.4.2",
     "inuitcss": "git://github.com/inuitcss/inuitcss.git#develop",
     "node-sass": "^4.3.0",
     "postcss-loader": "^1.2.2",
